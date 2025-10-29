@@ -76,8 +76,6 @@ YouTrack_Monitoring/
     │   │   ├── cpu_usage.json
     │   │   └── definitions/
     │   └── dashboard.yaml
-    ├── loki/
-    ├── alertmanager/
     ├── postgres/
     └── README.md
 
