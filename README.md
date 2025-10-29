@@ -1,70 +1,93 @@
-# Demo Alerting in Prometheus and Grafana 
+# 🧩 YouTrack Monitoring Stack
 
-Grafana Alerting is built on the Prometheus Alerting model. This demo project showcases the similarities between Prometheus and Grafana alerting systems, covering topics such as:
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?logo=grafana&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?logo=prometheus&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-- Creating alerts in Prometheus
-- Recreating the same alerts using Grafana
-- Setting up alerts based on Loki logs
-- Exploring alerting components like evaluation groups and notification policies
-- Creating template notifications
-- And more!
+A complete monitoring environment built with **Docker Compose**, integrating **Prometheus**, **Grafana**, **Loki**, **Alertmanager**, and **PostgreSQL**.  
+This project demonstrates how to collect, store, and visualize system metrics — focusing on CPU usage monitoring through Prometheus and Grafana dashboards.
 
-This project pairs well with this [Alerting Presentation Template](https://docs.google.com/presentation/d/1XvJnBlNnXUjiS409ABN4NxNkFZoYDmoRKKoJqsvln-g/edit?usp=sharing). Together, they provide an excellent starting point for presenting the Prometheus Alerting model and demonstrating its use in Grafana.
+---
 
-## Run the demo environment
+## ⚙️ Stack Overview
 
-This repository includes a [Docker Compose setup](./docker-compose.yaml) that runs Grafana, Prometheus, Prometheus Alertmanager, Loki, and an SMTP server for testing email notifications.
+| Service | Port | Description |
+|----------|------|-------------|
+| **Prometheus** | `9090` | Metrics collection and time-series storage |
+| **Grafana** | `3000` | Dashboard visualization and alerting |
+| **Loki** | `3100` | Log aggregation system |
+| **Alertmanager** | `9093` | Alert routing and notification management |
+| **PostgreSQL** | `5488` | Sample database for metric correlation |
+| **Node Exporter** | `9100` | Host-level CPU & memory metrics exporter |
 
-To run the demo environment:
+---
+
+## 🧠 Objective
+
+The goal of this setup is to provide a **working monitoring environment** that shows how to:
+
+- Deploy Grafana + Prometheus + Loki + Alertmanager with Docker.
+- Collect and visualize metrics (like CPU usage).
+- Treat observability as code (versioned, reproducible setup).
+- Export dashboards as JSON and include them in Git repositories.
+
+---
+
+## 📊 CPU Usage Dashboard
+
+This Grafana dashboard visualizes average CPU usage per instance based on Prometheus metric:
+job:cpu_usage:5m
+
+**Thresholds:**
+- 🟢 Normal → < 70 %
+- 🟡 Warning → 70–90 %
+- 🔴 Critical → > 90 %
+
+---
+
+## 🚀 How to Run
 
 ```bash
-docker compose up
-```
+cd ~/YouTrack_Monitoring/demo-stack
+docker compose up -d
 
-You can then access:
-- Grafana: [http://localhost:3000](http://localhost:3000/)
-- Prometheus web UI: [http://localhost:9090](http://localhost:9090/)
-- Alertmanager web UI: [http://localhost:9093](http://localhost:9093/)
+Then access:
 
-### Generating test data
+	•	Grafana → http://localhost:3000￼
+	•	Prometheus → http://localhost:9090￼
+	•	Alertmanager → http://localhost:9093￼
 
-This demo uses [Grafana k6](https://grafana.com/docs/k6) to generate test data for Prometheus and Loki.
+To stop the environment:
+docker compose down
 
-The [k6 tests in the `testdata` folder](./testdata/) inject Prometheus metrics and Loki logs that you can use to define alert queries and conditions. 
 
-1. Install **k6 v1.2.0** or later.
+📁 Directory Structure
 
-2. Run a k6 test with the following command:
+YouTrack_Monitoring/
+└── demo-stack/
+    ├── docker-compose.yaml
+    ├── prometheus/
+    │   ├── prometheus.yml
+    │   └── rules/
+    │       └── cpu.rules.yml
+    ├── grafana/
+    │   ├── dashboards/
+    │   │   ├── cpu_usage.json
+    │   │   └── definitions/
+    │   └── dashboard.yaml
+    ├── loki/
+    ├── alertmanager/
+    ├── postgres/
+    └── README.md
 
-    ```bash
-    k6 run testdata/<FILE>.js
-    ```
+    👤 Author
 
-You can modify and run the k6 scripts to simulate different alert scenarios.
-For details on inserting data into Prometheus or Loki, see the `xk6-client-prometheus-remote` and `xk6-loki` APIs.
+David Esteban Correa
+Dual Degree in Computer Science & Business Administration
+AWS & Machine Learning Certified | Solidity Developer
+GitHub → dalva-code￼
 
-### Receive webhook notifications
+📜 License
 
-One of the simplest ways to receive alert notifications is by using a Webhook.  You can use [`webhook.site`](https://webhook.site/) to create Webhook URLs and view the incoming messages.
-
-- For Prometheus alertmanager: 
-  
-  Set the Webhook URL to the [alertmanager.yml](./alertmanager/alertmanager.yml) configuration file.
-
-- For Grafana:
-  
-  Create a Webhook contact point and assign it to the notification policy.
-
-### Receive mail notifications
-
-You can also configure notifications to be sent via your Gmail account using an [App Password](https://support.google.com/accounts/answer/185833?hl=en). After creating your App password:
-
-- For Prometheus Alertmanager:
-
-  Replace `your_mail@gmail` with your Gmail address in the [alertmanager.yml](./alertmanager/alertmanager.yml) configuration file.
-
-  Copy `alertmanager/smtp_auth_password.example` to `alertmanager/smtp_auth_password` and set your password.
-
-- For Grafana:
-
-  Copy `environments/smpt.env.example` to `environments/smpt.env` and set the appropriate environment variables values.
+MIT License © 2025 David Esteban Correa

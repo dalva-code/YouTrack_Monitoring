@@ -1,3 +1,17 @@
-/k6
-/alertmanager/smtp_auth_password
-/environments/smtp.env
+# Docker / runtime
+**/.DS_Store
+**/.idea
+**/.vscode
+**/.env
+**/smtp.env
+**/smtp_auth_password
+**/smtp_auth_password.example
+**/tmp/
+**/data/
+**/logs/
+
+# Grafana local state (si lo añades)
+grafana/data/
+
+# Node / misc
+node_modules/

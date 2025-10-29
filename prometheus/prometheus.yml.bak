@@ -9,13 +9,14 @@ alerting:
 
 rule_files:
   - 'rules/1.basic.yml'
-  - 'rules/cpu.rules.yml'
 
 scrape_configs:
+  # Prometheus se monitorea a sí mismo
   - job_name: 'prometheus'
     static_configs:
       - targets: ['prometheus:9090']
 
+  # Node exporter (métricas del host)
   - job_name: 'node'
     static_configs:
       - targets: ['node-exporter:9100']
