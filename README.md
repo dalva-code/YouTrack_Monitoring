@@ -79,11 +79,15 @@ YouTrack_Monitoring/
     ├── postgres/
     └── README.md
 
+
 ## 👤 Author  
+
 **David Esteban Correa**  
 Dual Degree in Computer Science & Business Administration  
 AWS & Machine Learning Certified | Solidity Developer  
 [GitHub → dalva-code](https://github.com/dalva-code)
+
+---
 
 ## 📜 License  
 MIT License © 2025 David Esteban Correa
