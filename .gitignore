@@ -15,3 +15,7 @@ grafana/data/
 
 # Node / misc
 node_modules/
+testdata/
+environments/
+alertmanager/
+loki/
